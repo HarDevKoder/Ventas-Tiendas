@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0"
+    />
+    <title>Pruebas</title>
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="shortcut icon"
+      href="imagenes/iconoClases2Prog.ico"
+      type="image/x-icon"
+    />
+  </head>
+  <!-- Indico en el paréntesis cuantas tiendas deseo crear -->
+  <body onload="generarTiendas()">
+    <div class="contenedorGeneral">
+      <!-- Titulo Principal -->
+      <h1>Reporte de Ventas</h1>
+      <hr />
+      <!-- Contenedor que incluye las tiendas creadas con JS -->
+      <div class="contenedorVentas" id="contenedorVentas"></div>
+      <!-- Espacio para mostrar los resutados -->
+      <span id="spanResultado"></span>
+      <!-- Contenedor que incluye los botones -->
+      <div class="contenedorBotones">
+        <button class="btnCalcular" id="btnCalcular">Calcular</button>
+        <button class="btnReset" id="btnReset">Reset</button>
+      </div>
+    </div>
+    <!-- Hoja de scripts -->
+    <script src="js/script.js" defer></script>
+  </body>
+</html>
