@@ -21,8 +21,15 @@ const tienda = (inputID, textoLabel) => {
 // Función que genera la cantidad de Tiendas Requeridas
 const generarTiendas = () => {
   tiendasTotales = Number(prompt('Cuantas tiendas deseas crear?: '));
-  for (let i = 1; i <= tiendasTotales; i++) {
-    contenedorVentas.append(tienda(`ventasTienda${i}`, `Tienda ${i}:`));
+  if(tiendasTotales===0){
+    setTimeout(()=>{
+      alert('El valor mínimo es 1 😒');
+      location.reload();
+    },500);
+  }else{
+    for (let i = 1; i <= tiendasTotales; i++) {
+      contenedorVentas.append(tienda(`ventasTienda${i}`, `Tienda ${i}:`));
+    }
   }
 };
 
