@@ -14,6 +14,7 @@
   flex-direction: column;
   justify-content: center;
   border-radius: 5px;
+  background: RGBA(0,155,191,0.3);
 }
 
 h1 {
@@ -34,14 +35,19 @@ hr {
   gap: 10px;
 }
 
+label{
+  font-weight: bolder;
+}
+
 span {
   text-align: center;
   margin-top: 20px;
+  font-weight: bolder;
 }
 
 .contenedorBotones {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   justify-content: center;
   margin-top: 20px;
 }
@@ -63,7 +69,7 @@ input::-webkit-outer-spin-button {
   margin: 0;
 }
 
-@media (max-width: 600px) {
+@media (50px<=width <=600px) {
   .contenedorGeneral {
     width: 95%;
     margin: 10px auto;
@@ -78,8 +84,8 @@ input::-webkit-outer-spin-button {
     font-weight: bold;
     border: 1px solid silver;
   }
-  
-  .contenedorVentas > *{
+
+  .contenedorVentas > * {
     width: 70%;
   }
 
@@ -88,12 +94,21 @@ input::-webkit-outer-spin-button {
     font-size: 1.5em;
     width: 50%;
   }
-  
-  label{
+
+  label {
     font-size: 1.3em;
   }
 
-  span{
+  span {
     font-size: 1.3em;
+  }
+}
+
+@media (601px<=width <=800px) {
+  .contenedorGeneral {
+    width: 50%;
+    max-width: 50%;
+    margin: 10px auto;
+    background: green;
   }
 }
