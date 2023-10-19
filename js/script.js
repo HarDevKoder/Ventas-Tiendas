@@ -1,8 +1,19 @@
+// Variables globales
+// ------------------------------------------------------------------------------
+let ventaTotal = 0;
+let ventaMayor = 0;
+let ventaMenor = 0;
+let ventasRegistradas = [];
+let tiendasTotales;
+
 // Elementos del DOM (referencias)
+// ------------------------------------------------------------------------------
 const spanResultado = document.getElementById("spanResultado");
 const contenedorBotones = document.querySelector(".contenedorBotones");
 const contenedorVentas = document.getElementById("contenedorVentas");
 
+// Funciones
+// ------------------------------------------------------------------------------
 // Función para generar el parrafo contenedor de tiendas
 const tienda = (inputID, textoLabel) => {
   const parrafo = document.createElement("p");
@@ -33,23 +44,20 @@ const generarTiendas = () => {
   }
 };
 
-// Variables globales
-let ventaTotal = 0;
-let ventaMayor = 0;
-let ventaMenor = 0;
-let ventasRegistradas = [];
-let tiendasTotales;
-
 // Función que extrae los valores de cada venta
 const extraerValorVenta = () => {
   ventasRegistradas = [];
   for (let i = 1; i <= tiendasTotales; i++) {
     const inputVenta = document.getElementById(`ventasTienda${i}`);
     let valorVenta = Number(inputVenta.value);
-    if(valorVenta<0){
-      inputVenta.style.border='2px solid red';
-    }else{
-      inputVenta.style.border='';
+    if (valorVenta < 0) {
+      inputVenta.style.border = '2px solid red';
+      inputVenta.style.background = 'azure';
+      inputVenta.style.color = 'black';
+    } else {
+      inputVenta.style.border = '';
+      inputVenta.style.background = 'azure';
+      inputVenta.style.color = 'black';
     }
     ventasRegistradas.push(valorVenta);
   }
@@ -77,7 +85,47 @@ const ventaMasBaja = (ventasRegistradas) => {
   return ventaMenor;
 };
 
+//Funcion que calcula el numero de las tiendas con mayores ventas
+const tiendasMayorVenta = (ventasRegistradas) => {
+  let mayor;
+  let mayoresVentas = [];
+  mayor = ventaMasAlta(ventasRegistradas);
+  for (let i = 0; i < ventasRegistradas.length; i++) {
+    if (ventasRegistradas[i] === mayor) {
+      mayoresVentas.push(i + 1);
+    }
+  }
+
+  for (let tienda of mayoresVentas) {
+    const inputVenta = document.getElementById(`ventasTienda${tienda}`);
+    inputVenta.style.background = 'green';
+    inputVenta.style.color = 'azure';
+    inputVenta.style.fontWeight = 'bold';
+  }
+}
+
+//Funcion que calcula el numero de las tiendas con menores ventas
+const tiendasMenorVenta = (ventasRegistradas) => {
+  let menor;
+  let menoresVentas = [];
+  menor = ventaMasBaja(ventasRegistradas);
+  for (let i = 0; i < ventasRegistradas.length; i++) {
+    if (ventasRegistradas[i] === menor) {
+      menoresVentas.push(i + 1);
+    }
+  }
+
+  for (let tienda of menoresVentas) {
+    const inputVenta = document.getElementById(`ventasTienda${tienda}`);
+    inputVenta.style.background = 'red';
+    inputVenta.style.color = 'azure';
+    inputVenta.style.fontWeight = 'bold';
+  }
+}
+
+
 // Programa Principal
+// ------------------------------------------------------------------------------
 contenedorBotones.addEventListener("click", (event) => {
   if (event.target.tagName === "BUTTON") {
     let botonPresionado = event.target.textContent;
@@ -88,17 +136,17 @@ contenedorBotones.addEventListener("click", (event) => {
       let tieneNegativos = ventasRegistradas.some(x => x < 0);
       // si hay negativos vuelve a esperar correccion de valores
       if (tieneNegativos) {
-        spanResultado.style.display='none';
+        spanResultado.style.display = 'none';
         ventasRegistradas = extraerValorVenta();
       } else {
         // si no hay negativos, realiza los cálculos
-        spanResultado.style.display='block';
+        spanResultado.style.display = 'block';
         ventaTotal = totalVentas(ventasRegistradas);
         ventaMayor = ventaMasAlta(ventasRegistradas);
         ventaMenor = ventaMasBaja(ventasRegistradas);
-        spanResultado.textContent = `Total Ventas: ${ventaTotal}\n
-                                  Venta mas Alta: ${ventaMayor}\n
-                                  Venta más Baja: ${ventaMenor}`;
+        tiendasMayorVenta(ventasRegistradas);
+        tiendasMenorVenta(ventasRegistradas);
+        spanResultado.textContent = `Total Ventas: ${ventaTotal}`;
         spanResultado.style.whiteSpace = "pre-line";
       }
     } else {
