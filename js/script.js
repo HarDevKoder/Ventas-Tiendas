@@ -56,23 +56,6 @@ const extraerValorVenta = () => {
   return ventasRegistradas;
 };
 
-// Funcion que valida que no se ingresen valores negativos de ventas
-const impedirIngresoValoresNegativos = (ventasRegistradas) => {
-  let ventasNegativas = [];
-  // creo array con indices de ventas negativas
-  for (let i = 0; i < ventasRegistradas.length; i++) {
-    if (ventasRegistradas[i] < 0) {
-      ventasNegativas.push(i);
-    }
-    for (let j = 0; j < ventasNegativas.length; j++) {
-      const inputVenta = document.getElementById(`ventasTienda${j + 1}`);
-      inputVenta.style.border = '2px solid red';
-    }
-  }
-  extraerValorVenta();
-  return ventasRegistradas;
-}
-
 // Función que calcula el total de las ventas
 const totalVentas = (ventasRegistradas) => {
   let total = 0;
@@ -93,7 +76,6 @@ const ventaMasBaja = (ventasRegistradas) => {
   ventaMenor = Math.min(...ventasRegistradas);
   return ventaMenor;
 };
-
 
 // Programa Principal
 contenedorBotones.addEventListener("click", (event) => {
