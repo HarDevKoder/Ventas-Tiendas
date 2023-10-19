@@ -20,13 +20,13 @@ const tienda = (inputID, textoLabel) => {
 
 // Función que genera la cantidad de Tiendas Requeridas
 const generarTiendas = () => {
-  tiendasTotales = Number(prompt('Cuantas tiendas deseas crear?: '));
-  if(tiendasTotales===0){
-    setTimeout(()=>{
-      alert('El valor mínimo es 1 😒');
+  tiendasTotales = Number(prompt("Cuantas tiendas deseas crear?: "));
+  if (tiendasTotales === 0) {
+    setTimeout(() => {
+      alert("El valor mínimo es 1 😒");
       location.reload();
-    },500);
-  }else{
+    }, 500);
+  } else {
     for (let i = 1; i <= tiendasTotales; i++) {
       contenedorVentas.append(tienda(`ventasTienda${i}`, `Tienda ${i}:`));
     }
@@ -46,10 +46,32 @@ const extraerValorVenta = () => {
   for (let i = 1; i <= tiendasTotales; i++) {
     const inputVenta = document.getElementById(`ventasTienda${i}`);
     let valorVenta = Number(inputVenta.value);
+    if(valorVenta<0){
+      inputVenta.style.border='2px solid red';
+    }else{
+      inputVenta.style.border='';
+    }
     ventasRegistradas.push(valorVenta);
   }
   return ventasRegistradas;
 };
+
+// Funcion que valida que no se ingresen valores negativos de ventas
+const impedirIngresoValoresNegativos = (ventasRegistradas) => {
+  let ventasNegativas = [];
+  // creo array con indices de ventas negativas
+  for (let i = 0; i < ventasRegistradas.length; i++) {
+    if (ventasRegistradas[i] < 0) {
+      ventasNegativas.push(i);
+    }
+    for (let j = 0; j < ventasNegativas.length; j++) {
+      const inputVenta = document.getElementById(`ventasTienda${j + 1}`);
+      inputVenta.style.border = '2px solid red';
+    }
+  }
+  extraerValorVenta();
+  return ventasRegistradas;
+}
 
 // Función que calcula el total de las ventas
 const totalVentas = (ventasRegistradas) => {
@@ -72,19 +94,29 @@ const ventaMasBaja = (ventasRegistradas) => {
   return ventaMenor;
 };
 
+
 // Programa Principal
 contenedorBotones.addEventListener("click", (event) => {
   if (event.target.tagName === "BUTTON") {
     let botonPresionado = event.target.textContent;
     if (botonPresionado === "Calcular") {
+      // Extraigo los valores ingresados en los inputs
       ventasRegistradas = extraerValorVenta();
-      ventaTotal = totalVentas(ventasRegistradas);
-      ventaMayor = ventaMasAlta(ventasRegistradas);
-      ventaMenor = ventaMasBaja(ventasRegistradas);
-      spanResultado.textContent = `Total Ventas: ${ventaTotal}\n
+      // verifico si hay valores negativos
+      let tieneNegativos = ventasRegistradas.some(x => x < 0);
+      // si hay negativos vuelve a esperar correccion de valores
+      if (tieneNegativos) {
+        ventasRegistradas = extraerValorVenta();
+      } else {
+        // si no hay negativos, realiza los cálculos
+        ventaTotal = totalVentas(ventasRegistradas);
+        ventaMayor = ventaMasAlta(ventasRegistradas);
+        ventaMenor = ventaMasBaja(ventasRegistradas);
+        spanResultado.textContent = `Total Ventas: ${ventaTotal}\n
                                   Venta mas Alta: ${ventaMayor}\n
                                   Venta más Baja: ${ventaMenor}`;
-      spanResultado.style.whiteSpace = "pre-line";
+        spanResultado.style.whiteSpace = "pre-line";
+      }
     } else {
       location.reload();
     }
