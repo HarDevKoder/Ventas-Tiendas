@@ -106,9 +106,11 @@ contenedorBotones.addEventListener("click", (event) => {
       let tieneNegativos = ventasRegistradas.some(x => x < 0);
       // si hay negativos vuelve a esperar correccion de valores
       if (tieneNegativos) {
+        spanResultado.style.display='none';
         ventasRegistradas = extraerValorVenta();
       } else {
         // si no hay negativos, realiza los cálculos
+        spanResultado.style.display='block';
         ventaTotal = totalVentas(ventasRegistradas);
         ventaMayor = ventaMasAlta(ventasRegistradas);
         ventaMenor = ventaMasBaja(ventasRegistradas);
